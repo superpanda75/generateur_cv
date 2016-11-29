@@ -1,11 +1,21 @@
 <?php
 
-include 'View/layout.php';
+	if(isset($_GET['page']))
+    {
 
-    if (file_exists('generateur_cv/View/'.$content)){
-        include ('generateur_cv/index.php?p='.$content);
+        if(file_exists("View/content/".$_GET['page']))
+        {
+            $contenu = "View/content/".$_GET['page'];
+        }
+        else
+        {
+            $contenu = "View/content/404.php";
+        }
     }
-    else {
-        header('Location : generateur_cv/404.html');
+    else
+    {
+        $contenu = "View/content/accueil.php";
     }
+    require "View/layout.php";
+
 ?>
