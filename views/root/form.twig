@@ -1,33 +1,51 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
 
-<ul class="nav nav-tabs">
-    <li role="presentation"><a href="javascript:void(0)" onclick="openTab('p_info')" aria-controls="p_info" role="tab" data-toggle="tab">Mes informations</a></li>
-    <li role="presentation"><a href="javascript:void(0)" onclick="openTab('skill')" aria-controls="competences" role="tab" data-toggle="tab">Mes competences</a></li>
-    <li role="presentation"><a href="javascript:void(0)" onclick="openTab('formation')" aria-controls="formations" role="tab" data-toggle="tab">Mes formations</a></li>
-    <li role="presentation"><a href="javascript:void(0)" onclick="openTab('knowledge')" aria-controls="experiences" role="tab" data-toggle="tab">Mes experiences</a></li>
-</ul>
+    <!-- Bootstrap core CSS -->
+    <link href="View/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+    <!--<link href="View/css/style.css" rel="stylesheet"><link rel="stylesheet" href="View/css/rating.css">-->
+    <title>Mon CV</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="View/js/jquery-3.1.1.min.js"></script>
+    <script src="View/js/bootstrap.min.js"></script>
+</head>
+
 
 <div class="tab-content">
 
     <!--################################################################################################################
                                                          INFOS PERSOS
     #################################################################################################################-->
-    <div role="tabpanel" class="tab-pane" id="p_info">
+    <div role="tabpanel"  id="p_info">
         <div class="row">
             <div class="col-md-3"></div> <!--permet de centrer le formulaire au milieu-->
             <div class="col-md-6">
-                <form>
+                <form id="info_p" action="{{ constant('ROOT_URL')~'form/save' }}" method="post">
                     <h2>Mes infos personnelles</h2><br/>
                     <div class="form-group">
                         <label for="name">Nom</label>
-                        <input type="text" class="form-control" id="name" placeholder="votre nom">
+                        <input type="text" class="form-control" name="name" placeholder="votre nom">
                     </div>
                     <div class="form-group">
                         <label for="firstname">Prénom</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="votre prénom">
+                        <input type="text" class="form-control" name="firstname" placeholder="votre prénom">
                     </div>
                     <div class="form-group">
                         <label for="age">votre âge</label>
-                        <input class="form-control" type="number" placeholder="42" id="age">
+                        <input class="form-control" type="number" placeholder="42" name="age">
                     </div>
                     <br/>
                     <hr/>
@@ -36,50 +54,48 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input class="form-control" type="email" placeholder="exemple@fournisseur.com" id="email">
+                            <input class="form-control" type="email" placeholder="exemple@fournisseur.com" name="email">
                         </div>
                         <div class="form-group">
                             <label for="phone">Telephone</label>
-                            <input class="form-control" type="tel" placeholder="06 xx xx xx xx" id="phone">
+                            <input class="form-control" type="tel" placeholder="06 xx xx xx xx" name="phone">
                         </div>
                     </form>
                     <div class="form-group row">
                         <label for="adress" class="col-xs-2 col-form-label">Adresse</label>
                         <div class="col-xs-10">
-                            <input class="form-control" type="text" placeholder="20, rue de la Horde" id="adress">
+                            <input class="form-control" type="text" placeholder="20, rue de la Horde" name="adress">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="city" class="col-xs-2 col-form-label">Ville</label>
                         <div class="col-xs-10">
-                            <input class="form-control" type="text" placeholder="Orgrimmar" id="city">
+                            <input class="form-control" type="text" placeholder="Orgrimmar" name="city">
                         </div>
                     </div>
-                    <form class="form-inline">
+                    <div class="form-inline">
 
                         <div class="form-group formulaire">
                             <label for="postcode">Code Postal</label>
-                            <input class="form-control" type="number" placeholder="75001" id="postcode">
+                            <input class="form-control" type="number" placeholder="75001" name="postcode">
                         </div>
                         <div class="form-group formulaire">
                             <label for="adress_number">n° rue</label>
-                            <input class="form-control" type="number" placeholder="42" id="adress_number">
+                            <input class="form-control" type="number" placeholder="42" name="adress_number">
                         </div>
-                    </form>
-                </form>
-            </div>
-        </div>
-    </div>
+                    </div>
+
+                    </br>
+                    </br>
+                    <hr/>
+                    </br>
+                    </br>
 
     <!--################################################################################################################
                                                             COMPETENCES
        #################################################################################################################-->
 
-    <div role="tabpanel" class="tab-pane" id="skill">
-        <div class="row">
-            <div class="col-md-3"></div> <!--permet de centrer le formulaire au milieu-->
-            <div class="col-md-6">
-                <form>
+
                     <h2>Mes compétences</h2><br/>
                     <h3>Compétence 1</h3>
                     <div class="form-group">
@@ -106,11 +122,8 @@
                         </select>
                     </div>
                     <br/>
-                    </br>
-                    </br>
                     <hr/>
-                    </br>
-                    </br>
+                    <br/>
                     <h3>Compétence 2</h3>
                     <div class="form-group">
                         <label for="skill_title2">Titre</label>
@@ -135,11 +148,8 @@
                             <option value=10>10<small>/10</small></option>
                         </select>
                     </div>
-                    <br/>
-                    </br>
                     </br>
                     <hr/>
-                    </br>
                     </br>
                     <h3>Compétence 3</h3>
                     <div class="form-group">
@@ -165,11 +175,8 @@
                             <option value=10>10<small>/10</small></option>
                         </select>
                     </div>
-                    <br/>
-                    </br>
                     </br>
                     <hr/>
-                    </br>
                     </br>
                     <h3>Compétence 4</h3>
                     <div class="form-group">
@@ -195,21 +202,18 @@
                             <option value=10>10<small>/10</small></option>
                         </select>
                     </div>
-                    <br/>
-                </form>
-            </div>
-        </div>
-    </div>
+                    </br>
+                    </br>
+                    <hr/>
+                    </br>
+                    </br>
 
     <!--################################################################################################################
                                                          FORMATIONS
        #################################################################################################################-->
 
-    <div role="tabpanel" class="tab-pane" id="formation">
-        <div class="row">
-            <div class="col-md-3"></div> <!--permet de centrer le formulaire au milieu-->
-            <div class="col-md-6">
-                <form>
+
+
                     <h2>Mes formations</h2><br/>
                     <h3>formation 1</h3>
                     <div class="form-group">
@@ -243,9 +247,7 @@
                         <span class="result"></span>
                     </div>
                     </br>
-                    </br>
                     <hr/>
-                    </br>
                     </br>
                     <h3>formation 2</h3>
                     <div class="form-group">
@@ -279,9 +281,7 @@
                         <span class="result"></span>
                     </div>
                     </br>
-                    </br>
                     <hr/>
-                    </br>
                     </br>
                     <h3>formation 3</h3>
                     <div class="form-group">
@@ -315,9 +315,7 @@
                         <span class="result"></span>
                     </div>
                     </br>
-                    </br>
                     <hr/>
-                    </br>
                     </br>
                     <h3>formation 4</h3>
                     <div class="form-group">
@@ -350,21 +348,18 @@
                         <input id="end_date_form4" type="date" value="2016-01-01">
                         <span class="result"></span>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
+                    </br>
+                    </br>
+                    <hr/>
+                    </br>
+                    </br>
 
     <!--################################################################################################################
                                                             EXPERIENCES
        #################################################################################################################-->
 
 
-<div role="tabpanel" class="tab-pane" id="knowledge">
-    <div class="row">
-        <div class="col-md-3"></div> <!--permet de centrer le formulaire au milieu-->
-        <div class="col-md-6">
-            <form>
+
                 <h2>Mes expériences</h2><br/>
                 <h3>expérience 1</h3>
                 <div class="form-group">
@@ -379,6 +374,10 @@
                     <label for="know_societe1">Société</label>
                     <input type="text" class="form-control" id="know_societe1" placeholder="Microsoft">
                 </div>
+                <div class="form-group">
+                    <label for="know_comm1">Commentaire</label>
+                    <input type="text" class="form-control" id="know_comm1" placeholder="Gestion des missions">
+                </div>
                 <div>
                     <label for="start_date_know1">Date de début</label>
                     <input id="start_date_know1" type="date" value="2015-01-01">
@@ -389,11 +388,9 @@
                     <input id="end_date_know1" type="date" value="2016-01-01">
                     <span class="result"></span>
                 </div>
-                </br>
-                </br>
-                <hr/>
-                </br>
-                </br>
+                    </br>
+                    <hr/>
+                    </br>
                 <h3>expérience 2</h3>
                 <div class="form-group">
                     <label for="know_title2">Titre de l'expérience l'expérience</label>
@@ -407,6 +404,10 @@
                     <label for="know_societe2">Société</label>
                     <input type="text" class="form-control" id="know_societe2" placeholder="Microsoft">
                 </div>
+                <div class="form-group">
+                    <label for="know_comm2">Commentaire</label>
+                    <input type="text" class="form-control" id="know_comm2" placeholder="Gestion des missions">
+                </div>
                 <div>
                     <label for="start_date_know2">Date de début</label>
                     <input id="start_date_know2" type="date" value="2015-01-01">
@@ -417,11 +418,9 @@
                     <input id="end_date_know2" type="date" value="2016-01-01">
                     <span class="result"></span>
                 </div>
-                </br>
-                </br>
-                <hr/>
-                </br>
-                </br>
+                    </br>
+                    <hr/>
+                    </br>
                 <h3>expérience 3</h3>
                 <div class="form-group">
                     <label for="eexpitle3">Titre de l'expérience</label>
@@ -432,8 +431,12 @@
                     <input type="text" class="form-control" id="know_lieu3" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999">
                 </div>
                 <div class="form-group">
-                    <label for="know_societe3">Sociétéabel>
+                    <label for="know_societe3">Société</label>
                     <input type="text" class="form-control" id="know_societe3" placeholder="Microsoft">
+                </div>
+                <div class="form-group">
+                        <label for="know_comm3">Commentaire</label>
+                        <input type="text" class="form-control" id="know_comm3" placeholder="Gestion des missions">
                 </div>
                 <div>
                     <label for="start_date_know3">Date de début</label>
@@ -445,11 +448,9 @@
                     <input id="end_date_know3" type="date" value="2016-01-01">
                     <span class="result"></span>
                 </div>
-                </br>
-                </br>
-                <hr/>
-                </br>
-                </br>
+                    </br>
+                    <hr/>
+                    </br>
                 <h3>expérience 4</h3>
                 <div class="form-group">
                     <label for="know_title4">Titre de l'expérience</label>
@@ -463,6 +464,10 @@
                     <label for="know_societe4">Société</label>
                     <input type="text" class="form-control" id="know_societe4" placeholder="Microsoft">
                 </div>
+                <div class="form-group">
+                    <label for="know_comm4">Commentaire</label>
+                    <input type="text" class="form-control" id="know_comm4" placeholder="Gestion des missions">
+                </div>
                 <div>
                     <label for="start_date_know4">Date de début</label>
                     <input id="start_date_know4" type="date" value="2015-01-01">
@@ -473,12 +478,15 @@
                     <input id="end_date_know4" type="date" value="2016-01-01">
                     <span class="result"></span>
                 </div>
-            </form>
+                </form>
+                <br/>
+                <br/>
+                <br/>
+                <button class="btn-info col-md-12" href="#skill"  form="info_p" value="Submit">Choisir mon modèle de CV</button>
+                <br/>
+                <br/>
+                <br/>
+            </div>
         </div>
     </div>
-</div>
-
-
-
-
 </div>

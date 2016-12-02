@@ -1,0 +1,17 @@
+{
+  "autoload": {
+    "psr-4": {
+      "generateur_cv\\": "src"
+    }
+  },
+    "require": {
+      "mouf/mouf": "^2.0",
+      "mouf/mvc.splash": "^8.0",
+      "mouf/database.tdbm": "^4.2",
+      "mouf/security.userservice": "^2.1.0",
+      "mouf/security.userservice-splash": "^8.0.0",
+      "mouf/security.simplelogincontroller": "^5.0.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
