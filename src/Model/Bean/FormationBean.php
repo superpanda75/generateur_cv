@@ -13,4 +13,28 @@ use generateur_cv\Model\Bean\Generated\FormationBaseBean;
  */
 class FormationBean extends FormationBaseBean
 {
+
+    /**
+     * The setter for the "start_date" column.
+     *
+     * @param \DateTimeInterface $start_date
+     */
+    public function setStartDate(\DateTimeInterface $start_date = null)
+    {
+        $this->set('start_date', $start_date, 'formation');
+    }
+
+
+
+    /**
+     * The setter for the "end_date" column.
+     *
+     * @param \DateTimeInterface $end_date
+     */
+    public function setEndDate(\DateTimeInterface $end_date = null)
+    {
+        $this->set('end_date', $end_date, 'formation');
+    }
+
+
 }

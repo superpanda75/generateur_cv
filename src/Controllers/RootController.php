@@ -14,24 +14,30 @@ use Mouf\Mvc\Splash\Annotations\Post;
 use Mouf\Mvc\Splash\Annotations\Put;
 use Mouf\Mvc\Splash\Annotations\Delete;
 use Mouf\Mvc\Splash\Annotations\URL;
+use Mouf\Mvc\Splash\Controllers\Controller;
 use Mouf\Security\Logged;
 use Mouf\Html\Template\TemplateInterface;
 use Mouf\Html\HtmlElement\HtmlBlock;
 use Mouf\Security\UserService\UserServiceInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use \Twig_Environment;
 use Mouf\Html\Renderer\Twig\TwigTemplate;
 use Mouf\Mvc\Splash\HtmlResponse;
+use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\RedirectResponse;
 
 /**
  * TODO: write controller comment
  */
-class RootController {
+class RootController
+{
 
     /**
      * The template used by this controller.
      * @var TemplateInterface
+     * @var @Compulsory
      */
     private $template;
 
@@ -40,6 +46,11 @@ class RootController {
      * @var HtmlBlock
      */
     private $content;
+
+    /**
+     * @var array
+     */
+    public $outputs;
 
     /**
      * The Twig environment (used to render Twig templates).
@@ -87,7 +98,8 @@ class RootController {
                                 SkillDao $skill,
                                 FormationDao $formation,
                                 KnowledgeDao $knowledge
-                                ) {
+    )
+    {
         $this->template = $template;
         $this->content = $content;
         $this->twig = $twig;
@@ -100,13 +112,15 @@ class RootController {
 
     /**
      * @URL("/")
-    * @Logged
+     *
      */
-    public function index() {
+    public function index()
+    {
         // TODO: write content of action here
         $user = $this->userService->getLoggedUser();
+
         // Let's add the twig file to the template.
-        $this->content->addHtmlElement(new TwigTemplate($this->twig, 'views/root/index.twig', array("user"=>$user)));
+        $this->content->addHtmlElement(new TwigTemplate($this->twig, 'views/root/index.twig', array("user" => $user)));
 
         return new HtmlResponse($this->template);
     }
@@ -114,7 +128,8 @@ class RootController {
     /**
      * @URL("/form")
      */
-    public function editCvForm() {
+    public function editCvForm()
+    {
 
         $this->content->addHtmlElement(new TwigTemplate($this->twig, 'views/root/form.twig'));
 
@@ -122,89 +137,86 @@ class RootController {
     }
 
     /**
-     * @URL("/form/save")
+     * @URL("/form/cvModel")
      * @post
      */
 
-    public function saveCvForm(RequestInterface $request) {
-        $user_id =$this->userService->getUserId();
-
-
+    public function saveCvForm(RequestInterface $request)
+    {
         if ($request) {
             $result = $request->getParsedBody();
-
             $userObj = new UserBean();
 
-
-
-            $this->userBean->setName($result['name']);
-            $this->userBean->setFirstname($result['firstname']);
-            $this->userBean->setAge($result['age']);
-            $this->userBean->setEmail($result['email']);
-            $this->userBean->setPhone($result['phone']);
-            $this->userBean->setAdress($result['adress']);
-            $this->userBean->setCity($result['city']);
-            $this->userBean->setPostcode($result['postcode']);
-            $this->userBean->setAdressNumber($result['adress_number']);
+            $userObj->setName($result['name']);
+            $userObj->setFirstname($result['firstname']);
+            $userObj->setAge($result['age']);
+            $userObj->setEmail($result['email']);
+            $userObj->setPhone($result['phone']);
+            $userObj->setAdress($result['adress']);
+            $userObj->setCity($result['city']);
+            $userObj->setPostcode($result['postcode']);
+            $userObj->setAdressNumber($result['adress_number']);
 
             $this->user->save($userObj);
 
-            for ($i=1;$i=4;$i++){
+            $skillObj = new SkillBean();
+            $formationObj = new FormationBean();
+            $knowledgeObj = new KnowledgeBean();
 
-                $skillObj = new SkillBean();
+            for ($i = 1; $i <= 4; $i++) {
+
+                //$start_date_form = ($result['start_date_form'.$i]);
+                //$end_date_form = $result['end_date_form'.$i];
+                //$start_date_know = $result['start_date_know'.$i];
+                //$end_date_know = $result['end_date_know'.$i];
+
 
                 $skillObj->setTitle($result['skill_title'.$i]);
                 $skillObj->setComment($result['skill_comm'.$i]);
                 $skillObj->setLevel($result['level'.$i]);
-                $skillObj->setUser($user_id);
+                $skillObj->setUser();
 
                 $this->skill->save($skillObj);
 
-                $formationObj = new FormationBean();
+                $formStartDateObj = new \DateTime($result['start_date_form'.$i]);
+                $formEndDateObj = new \DateTime($result['end_date_form'.$i]);
+
 
                 $formationObj->setTitle($result['form_title'.$i]);
                 $formationObj->setAdress($result['form_lieu'.$i]);
                 $formationObj->setEstablishment($result['form_etablissement'.$i]);
                 $formationObj->setState($result['form_state'.$i]);
-                $formationObj->setStartDate($result['start_date_form'.$i]);
-                $formationObj->setEndDate($result['end_date_form'.$i]);
+                $formationObj->setStartDate($formStartDateObj);
+                $formationObj->setEndDate($formEndDateObj);
+                $formationObj->setUser();
 
                 $this->formation->save($formationObj);
 
 
-                $knowledgeObj = new KnowledgeBean();
+                $knowStartDateObj = new \DateTime($result['start_date_know'.$i]);
+                $knowEndDateObj = new \DateTime($result['end_date_know'.$i]);
+
 
                 $knowledgeObj->setTitle($result['know_title'.$i]);
                 $knowledgeObj->setAdress($result['know_lieu'.$i]);
                 $knowledgeObj->setCompany($result['know_societe'.$i]);
                 $knowledgeObj->setComment($result['know_comm'.$i]);
-                $knowledgeObj->setStartDate($result['start_date_know'.$i]);
-                $knowledgeObj->setEndDate($result['end_date_know'.$i]);
+                $knowledgeObj->setStartDate($knowStartDateObj);
+                $knowledgeObj->setEndDate($knowEndDateObj);
+                $knowledgeObj->setUser();
+
 
                 $this->knowledge->save($knowledgeObj);
 
-
-
             }
-
-            return new JsonResponse(['response'=>$request],200);
         }
-        else {return new JsonResponse(['response'=>'something went wrong'],403);}
+
+
+        $this->content->addHtmlElement(new TwigTemplate($this->twig, 'views/root/cvModels.twig'));
+
+        return new HtmlResponse($this->template);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 

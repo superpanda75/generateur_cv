@@ -69,7 +69,7 @@ class FormationBaseBean extends AbstractTDBMObject implements \JsonSerializable
     /**
      * The getter for the "title" column.
      *
-     * @return int|null
+     * @return string|null
      */
     public function getTitle()
     {
@@ -79,9 +79,9 @@ class FormationBaseBean extends AbstractTDBMObject implements \JsonSerializable
     /**
      * The setter for the "title" column.
      *
-     * @param int $title
+     * @param string $title
      */
-    public function setTitle(int $title = null)
+    public function setTitle(string $title = null)
     {
         $this->set('title', $title, 'formation');
     }
@@ -89,7 +89,7 @@ class FormationBaseBean extends AbstractTDBMObject implements \JsonSerializable
     /**
      * The getter for the "comment" column.
      *
-     * @return int|null
+     * @return string|null
      */
     public function getComment()
     {
@@ -99,9 +99,9 @@ class FormationBaseBean extends AbstractTDBMObject implements \JsonSerializable
     /**
      * The setter for the "comment" column.
      *
-     * @param int $comment
+     * @param string $comment
      */
-    public function setComment(int $comment = null)
+    public function setComment(string $comment = null)
     {
         $this->set('comment', $comment, 'formation');
     }

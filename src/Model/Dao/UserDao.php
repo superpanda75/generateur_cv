@@ -63,7 +63,22 @@ class UserDao extends UserBaseDao implements UserDaoInterface
      * @return UserInterface
      */
     public function getUserByLogin($login) {
-        return $this->findOne('user.email = :email', ['email' => $login]);
+        return $this->findOne('user.email = :email', ['email' => $login]);}
 
-    }
+    /**
+     * return highest id or the table user, will be used to set the new id, cause no login management for this project
+     *
+     * @return int
+     */
+    public function getHigherId(){
+        $users = $this->findAll()->
+            $sql="SELECT Max(id) from user";
+            $lastEnteredUserId = $this->tdbmService->getTransientObjectsFromSQL($sql, null);
+        echo"<pre>";
+        print_r($lastEnteredUserId);die;
+            return $lastEnteredUserId;
+
+
+        }
+
 }

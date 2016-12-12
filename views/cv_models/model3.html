@@ -1,600 +1,231 @@
-<?php
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-// HTML Resume Template in PHP
-// version 2.2, 2006-08-06
-//
-// Copyright (c) 2002-2006 Alex King
-// http://www.alexking.org/software/resume/
-//
-// **********************************************************************
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 2 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful, but
-// WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-// General Public License for more details.
-//
-// http://www.gnu.org/copyleft/gpl.html
-//
-// *****************************************************************
-//
-
-/* -- INITIALIZE DATA ------------------------------------------------------------ */
-
-// we want to see any errors so we can fix them
-
-ini_set('display_errors', '1');
-ini_set('error_reporting', E_ALL);
-error_reporting(E_ALL); 
-
-$bio = array();
-$data = array();
-$data['jobs'] = array();
-$prefs = array();
-
-/* -- ENTER DATA ----------------------------------------------------------------- */
-
-// start editing here
-
-$bio['name'] 	= "John Smith";
-$bio['phone'] 	= "(408) 555-1212";
-$bio['email'] 	= "john.smith@example.com";
-$bio['address']	= "123 Any Street";
-$bio['city']	= "City";
-$bio['state']	= "State";
-$bio['zip']		= "99999";
-
-// set to 1 to show this info on the page, 0 to hide it
-
-$prefs['show_phone']	= 1;
-$prefs['show_email']	= 1;
-$prefs['show_address']	= 1;
-
-// if you want to be able to enter HTML (links, etc.) in your descriptions, set this to 1. This means you need to manually escape any content as HTML.
-
-$prefs['encode_output']	= 0;
-
-// enter job data here
-
-$data['objective'] = "To find a job, etc.";
-
-// add more to this array as needed
-$data['skills_technologies_projects'] = array("Skill description #1"
-                                             ,"Skill description #2"
-                                             ,"Skill description #3"
-                                             );
-
-// add more to this array as needed
-$data['education_interests'] = array("Degree description"
-                                    ,"Interest description"
-                                    ,"Accomplishment of note"
-                                    );
-
-// this is where you put all your job information
-// add more of these arrays as needed
-
-$data['jobs'][] = array('period' =>			"2000-Present"
-                       ,'employer' =>		"Company Name"
-                       ,'location' =>		"City, State"
-                       ,'employer_info' =>	"Company description."
-                       ,'employer_link' =>	"http://example.com/"
-                       ,'positions' => array('Position/Title' => array("Responsibility description"
-                                                                      ,"Accomplishment description #1"
-                                                                      ,"Accomplishment #2"
-                                                                      )
-                                            ,'Position/Title 2' => array("Responsibility description #2"
-                                                                        ,"Accomplishment for position #2"
-                                                                        )
-                                            )
-                       ,'show' => 1 // set to 0 to hide this job, 1 to show it
-                       );
-
-$data['jobs'][] = array('period' =>			"1995-2000"
-                       ,'employer' =>		"Company Name"
-                       ,'location' =>		"City, State"
-                       ,'employer_info' =>	"Company description."
-                       ,'positions' => array('Position/Title' => array("Responsibility description"
-                                                                      ,"Accomplishment description #1"
-                                                                      ,"Accomplishment #2"
-                                                                      )
-                                            )
-                       ,'show' => 1 // set to 0 to hide this job, 1 to show it
-                       );
-
-/* -- DONE ENTERING DATA - you shouldn't need to edit below this line ------------ */
-
-/* ------------------------------------------------------------------------------- */
-
-/* -- OUTPUT --------------------------------------------------------------------- */
-
-function pad_and_wrap($string, $pad_to = 20, $pad_with = ' ', $wrap_at = 80, $bullet = '') {
-	global $prefs;
-	if (!empty($prefs['encode_output']) && $prefs['encode_output'] == 1) {
-		$string = strip_tags($string);
-	}
-	if (!empty($bullet)) {
-		$string = $bullet.$string;
-	}
-	if (strlen($string) > $wrap_at) {
-		$wrap_line_at = strrpos(substr($string, 0, $wrap_at), ' ');
-		$output = str_pad('', $pad_to, $pad_with).substr($string, 0, $wrap_line_at);
-		$remainder = substr($string, $wrap_line_at + 1);
-		if (strlen($remainder) > 0) {
-			$output .= "\n".pad_and_wrap($remainder, ($pad_to + strlen($bullet)), $pad_with, ($wrap_at - strlen($bullet)), '');
-		}
-	}
-	else {
-		$output = str_pad('', $pad_to, $pad_with).$string;
-	}
-	return $output;
-}
-
-function encode_output($str) {
-	global $prefs;
-	if (!empty($prefs['encode_output']) && $prefs['encode_output'] == 1) {
-		return htmlentities($str);
-	}
-	else {
-		return $str;
-	}
-}
-
-// CSS
-
-ob_start();
-?>
-body {
-	margin: 10px;
-}
-p, td, span, li, a { 
-	font-family: verdana, arial, helvetica, sans-serif; 
-}
-h1 {
-	font: 90% verdana, arial, helvetica, sans-serif;
-	font-weight: bold;
-	margin: 0 0 5px 0;
-}
-h2 {
-	border-bottom: 1px solid #666;
-	clear: both;
-	font: 80% verdana, arial, helvetica, sans-serif;
-	font-weight: bold;
-	margin: 15px 0 10px 0;
-	padding: 0 0 3px 0;
-	width: 700px;
-}
-h3 {
-	float: left;
-	font: 80% verdana, arial, helvetica, sans-serif;
-	font-weight: bold;
-	margin: 0 0 5px 0;
-	padding: 0;
-	width: 446px;
-}
-li {
-	font-size: 70%;
-	margin: 0 0 3px 20px;
-	padding: 0;
-}
-p {
-	font-size: 70%;
-	margin: 0 0 10px 0;
-	padding: 0;
-	width: 575px;
-}
-body ul {
-	margin: 0 0 0 125px;
-	padding: 0;
-	width: 575px;
-}
-body div ul {
-	margin: 3px 0 0 0;
-	padding: 0;
-	width: 575px;
-}
-#bio_left {
-	font-size: 75%;
-	float: left;
-	width: 350px;
-}
-#bio_right {
-	font-size: 75%;
-	float: left;
-	text-align: right;
-	width: 350px;
-}
-.company {
-	clear: both;
-	margin: 0 0 5px 0;
-	padding: 0;
-}
-.data {
-	padding-left: 125px;
-}
-.date {
-	clear: left;
-	float: left;
-	padding-top: 2px;
-	width: 125px;
-}
-.job {
-	clear: both;
-	width: 700px;
-}
-.job_data {
-	float: left;
-	width: 575px;
-}
-.location {
-	clear: right;
-	float: left;
-	text-align: right;
-	width: 125px;
-}
-.position {
-	font-style: italic;
-	margin: 0 0 5px 0;
-}
-#references {
-	margin-top: 20px;
-}
-#meta {
-	margin-top: 30px;
-}
-<?php
-$css_screen = ob_get_contents();
-ob_end_clean();
-
-ob_start();
-?>
-body {
-	margin: 0px;
-}
-p, td, span, li, a { 
-	font-family: verdana, arial, helvetica, sans-serif; 
-}
-h1 {
-	font: 14pt verdana, arial, helvetica, sans-serif;
-	font-weight: bold;
-	margin: 0 0 5px 0;
-}
-h2 {
-	border-bottom: 1px solid #666;
-	clear: both;
-	font: 11pt verdana, arial, helvetica, sans-serif;
-	font-weight: bold;
-	margin: 15px 0 10px 0;
-	padding: 0 0 3px 0;
-	width: 100%;
-}
-h3 {
-	font: 11pt verdana, arial, helvetica, sans-serif;
-	font-weight: bold;
-	margin: 0 0 2px 0;
-	padding: 0;
-}
-li {
-	font-size: 10pt;
-	margin: 0 0 3px 5%;
-	padding: 0;
-}
-p {
-	font-size: 10pt;
-	margin: 0 0 10px 0;
-	padding: 0;
-}
-body ul {
-	margin: 0 0 0 20%;
-	padding: 0;
-}
-body div ul {
-	margin: 3px 0 0 0;
-	padding: 0;
-}
-#bio_left {
-	font-size: 11pt;
-	float: left;
-	width: 50%;
-}
-#bio_right {
-	font-size: 11pt;
-	float: left;
-	text-align: right;
-	width: 50%;
-}
-.company {
-	clear: both;
-	margin: 0 0 5px 0;
-	padding: 0;
-}
-.data {
-	padding-left: 20%;
-}
-.date {
-	clear: left;
-	float: left;
-	padding-top: 2px;
-	width: 20%;
-}
-.job {
-	clear: both;
-	width: 100%;
-}
-.job_data {
-	float: left;
-	width: 80%;
-}
-.location {
-	clear: right;
-	float: right;
-	text-align: right;
-	width: 20%;
-}
-.position {
-	font-style: italic;
-	margin: 0 0 5px 0;
-}
-#references {
-	margin-top: 20px;
-}
-#meta {
-	display: none;
-}
-<?php
-$css_print = ob_get_contents();
-ob_end_clean();
-
-ob_start();
-$split_length = floor(strlen($bio['email']) / 4);
-?>
-function email() { // try to avoid spam trollers, intentionally complex
-	var a = "<?php print(substr($bio['email'], 0, $split_length)); ?>";
-	var b = "<?php print(substr($bio['email'], $split_length, $split_length)); ?>";
-	var c = "<?php print(substr($bio['email'], ($split_length * 2), $split_length)); ?>";
-	var d = "<?php print(substr($bio['email'], ($split_length * 3), ($split_length + (strlen($bio['email']) % 4)))); ?>";
-	
-	e_string = "<a href=\"ma" + "ilto:" + a + b + c + d + "\">" + a + b + c + d + "</a>";
-	document.write(e_string);
-}
-<?php
-$js = ob_get_contents();
-ob_end_clean();
-
-if (isset($_REQUEST["output"])) {
-	$output = stripslashes($_REQUEST["output"]);
-}
-else {
-	$output = 'html';
-}
-switch ($output) {
-	case "css_screen":
-		header("Content-type: text/css");
-		print($css_screen);
-		break;
-	case "css_print":
-		header("Content-type: text/css");
-		print($css_print);
-		break;
-	case "js":
-		header("Content-type: text/javascript");
-		print($js);
-		break;
-	case "html":
-		if (isset($_GET['contained']) && $_GET['contained'] == 1) {
-			header("Content-Type: application/force-download");
-			header("Content-Type: application/octet-stream");
-			header("Content-Type: application/download");
-			header("Content-Disposition: attachment; filename=\"resume.html\"");
-		}
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<!-- HTML Resume Template from http://www.alexking.org/software/resume/ -->
 <html>
 <head>
-<title><?php print(encode_output($bio['name'])); ?></title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<?php
-if (isset($_GET['contained']) && $_GET['contained'] == 1) {
-?>
-<style type="text/css" media="screen">
-<?php
-	print($css_screen);
-?>
-</style>
-<style type="text/css" media="print">
-<?php
-	print($css_print);
-?>
-</style>
-<script type="text/javascript">
-<?php
-	print($js);
-?>
-</script>
-<?php
-}
-else {
-?>
-<style type="text/css" media="screen">
-	@import url(http://<?php print($_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']); ?>?output=css_screen);
-</style>
-<link rel="stylesheet" type="text/css" media="print" href="http://<?php print($_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']); ?>?output=css_print" />
-<script type="text/javascript" src="http://<?php print($_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']); ?>?output=js"></script>
-<?php
-}
-?>
-</head>
 
+	<title>Jonathan Doe | Web Designer, Director | name@yourdomain.com</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" media="all" /> 
+	<style type="text/css" media="all">	
+	.msg { padding: 10px; background: #222; position: relative; }
+.msg h1 { color: #fff;  }
+.msg a { margin-left: 20px; background: #408814; color: white; padding: 4px 8px; text-decoration: none; }
+.msg a:hover { background: #266400; }
+
+/* //-- yui-grids style overrides -- */
+body { font-family: Georgia; color: #444; }
+#inner { padding: 10px 80px; margin: 80px auto; background: #f5f5f5; border: solid #666; border-width: 8px 0 2px 0; }
+.yui-gf { margin-bottom: 2em; padding-bottom: 2em; border-bottom: 1px solid #ccc; }
+
+/* //-- header, body, footer -- */
+#hd { margin: 2.5em 0 3em 0; padding-bottom: 1.5em; border-bottom: 1px solid #ccc }
+#hd h2 { text-transform: uppercase; letter-spacing: 2px; }
+#bd, #ft { margin-bottom: 2em; }
+
+/* //-- footer -- */
+#ft { padding: 1em 0 5em 0; font-size: 92%; border-top: 1px solid #ccc; text-align: center; }
+#ft p { margin-bottom: 0; text-align: center;   }
+
+/* //-- core typography and style -- */
+#hd h1 { font-size: 48px; text-transform: uppercase; letter-spacing: 3px; }
+h2 { font-size: 152% }
+h3, h4 { font-size: 122%; }
+h1, h2, h3, h4 { color: #333; }
+p { font-size: 100%; line-height: 18px; padding-right: 3em; }
+a { color: #990003 }
+a:hover { text-decoration: none; }
+strong { font-weight: bold; }
+li { line-height: 24px; border-bottom: 1px solid #ccc; }
+p.enlarge { font-size: 144%; padding-right: 6.5em; line-height: 24px; }
+p.enlarge span { color: #000 }
+.contact-info { margin-top: 7px; }
+.first h2 { font-style: italic; }
+.last { border-bottom: 0 }
+
+
+/* //-- section styles -- */
+
+a#pdf { display: block; float: left; background: #666; color: white; padding: 6px 50px 6px 12px; margin-bottom: 6px; text-decoration: none;  }
+a#pdf:hover { background: #222; }
+
+.job { position: relative; margin-bottom: 1em; padding-bottom: 1em; border-bottom: 1px solid #ccc; }
+.job h4 { position: absolute; top: 0.35em; right: 0 }
+.job p { margin: 0.75em 0 3em 0; }
+
+.last { border: none; }
+.skills-list {  }
+.skills-list ul { margin: 0; }
+.skills-list li { margin: 3px 0; padding: 3px 0; }
+.skills-list li span { font-size: 152%; display: block; margin-bottom: -2px; padding: 0 }
+.talent { width: 32%; float: left }
+.talent h2 { margin-bottom: 6px; }
+
+#srt-ttab { margin-bottom: 100px; text-align: center;  }
+#srt-ttab img.last { margin-top: 20px }
+
+/* --// override to force 1/8th width grids -- */
+.yui-gf .yui-u{width:80.2%;}
+.yui-gf div.first{width:12.3%;}
+	</style>
+	
+	
+
+</head>
 <body>
 
-<h1><?php print(encode_output($bio['name'])); ?></h1>
+<div id="doc2" class="yui-t7">
+	<div id="inner">
+	
+		<div id="hd">
+			<div class="yui-gc">
+				<div class="yui-u first">
+					<h1>Jonathan Doe</h1>
+					<h2>Web Designer, Director</h2>
+				</div>
 
-<p id="bio_left">
-<?php
-if ($prefs['show_phone'] == 1) {
-	print(encode_output($bio['phone']).'<br />');
-}
-if ($prefs['show_email'] == 1) {
-?>
-	<script type="text/javascript">email();</script>
-<?php
-}
-?>
-</p>
-<p id="bio_right">
-<?php
-if ($prefs['show_address'] == 1) {
-	print(encode_output($bio['address']).'<br />'
-	     .encode_output($bio['city']).', '
-	     .encode_output($bio['state']).' '
-	     .encode_output($bio['zip'])
-	     );
-}
-?>
-</p>
+				<div class="yui-u">
+					<div class="contact-info">
+						<h3><a id="pdf" href="#">Download PDF</a></h3>
+						<h3><a href="mailto:name@yourdomain.com">name@yourdomain.com</a></h3>
+						<h3>(313) - 867-5309</h3>
+					</div><!--// .contact-info -->
+				</div>
+			</div><!--// .yui-gc -->
+		</div><!--// hd -->
 
-<h2>OBJECTIVE</h2>
-<p class="data"><?php print(encode_output($data['objective'])); ?></p>
+		<div id="bd">
+			<div id="yui-main">
+				<div class="yui-b">
 
-<h2>EXPERIENCE</h2>
-<?php
-foreach ($data['jobs'] as $job) { 
-	if ($job['show'] == 1) {
-		if (!empty($job['employer_link'])) {
-			$link = array(
-				'<a href="'.$job['employer_link'].'">'
-				,'</a>'
-			);
-		}
-		else {
-			$link = array('','');
-		}
-?>
-<div class="job">
-	<p class="date"><?php print(encode_output($job['period'])); ?></p>
-	<div class="job_data">
-		<h3><?php print($link[0].encode_output($job['employer']).$link[1]); ?></h3>
-<?php
-		if (!empty($job['location'])) {
-?>
-		<p class="location"><?php print(encode_output($job['location'])); ?></p>
-<?php
-		}
-		else {
-?>
-		<p class="location">&nbsp;</p>
-<?php
-		}
-		if (!empty($job['employer_info'])) {
-?>
-		<p class="company"><?php print(encode_output($job['employer_info'])); ?></p>
-<?php
-		}
-		foreach ($job['positions'] as $title => $position) {
-?>
-		<p class="position"><?php print(encode_output($title)); ?></p>
-		<ul>
-<?php
-			foreach ($position as $responsibility) {
-				print("			<li>".encode_output($responsibility)."</li>\n");
-			}
-?>
-		</ul>
-		&nbsp;
-<?php
-		}
-?>
-	</div>
-</div>
+					<div class="yui-gf">
+						<div class="yui-u first">
+							<h2>Profile</h2>
+						</div>
+						<div class="yui-u">
+							<p class="enlarge">
+								Progressively evolve cross-platform ideas before impactful infomediaries. Energistically visualize tactical initiatives before cross-media catalysts for change. 
+							</p>
+						</div>
+					</div><!--// .yui-gf -->
 
-<?php
-	}
-}
-?>
-<h2>SKILLS, TECHNOLOGIES &amp; PROJECTS</h2>
-<ul>
-<?php
-foreach ($data['skills_technologies_projects'] as $temp) {
-	print("	<li>".encode_output($temp)."</li>\n");
-}
-?>
-</ul>
+					<div class="yui-gf">
+						<div class="yui-u first">
+							<h2>Skills</h2>
+						</div>
+						<div class="yui-u">
 
-<h2>EDUCATION &amp; INTERESTS</h2>
-<ul>
-<?php
-foreach ($data['education_interests'] as $temp) {
-	print("	<li>".encode_output($temp)."</li>\n");
-}
-?>
-</ul>
+								<div class="talent">
+									<h2>Web Design</h2>
+									<p>Assertively exploit wireless initiatives rather than synergistic core competencies.	</p>
+								</div>
 
-<p id="references">References available upon request.</p>
+								<div class="talent">
+									<h2>Interface Design</h2>
+									<p>Credibly streamline mission-critical value with multifunctional functionalities.	 </p>
+								</div>
 
-<p id="meta">
-<?php
-if (empty($_GET['contained']) || $_GET['contained'] != 1) {
-?>
-	<span id="versions"><a href="<?php print($_SERVER['PHP_SELF']); ?>">HTML version</a> | <a href="<?php print($_SERVER['PHP_SELF'].'?output=html&amp;contained=1'); ?>">E-mailable HTML version</a> | <a href="<?php print($_SERVER['PHP_SELF'].'?output=text'); ?>">Plain Text (.txt) version</a>.</span>
-<?php
-}
-?>
-	<span id="valid">Valid <a href="http://validator.w3.org/check/referer">XHTML 1.1</a> / <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS 2.0</a></span>
-</p>
+								<div class="talent">
+									<h2>Project Direction</h2>
+									<p>Proven ability to lead and manage a wide variety of design and development projects in team and independent situations.</p>
+								</div>
+						</div>
+					</div><!--// .yui-gf -->
+
+					<div class="yui-gf">
+						<div class="yui-u first">
+							<h2>Technical</h2>
+						</div>
+						<div class="yui-u">
+							<ul class="talent">
+								<li>XHTML</li>
+								<li>CSS</li>
+								<li class="last">Javascript</li>
+							</ul>
+
+							<ul class="talent">
+								<li>Jquery</li>
+								<li>PHP</li>
+								<li class="last">CVS / Subversion</li>
+							</ul>
+
+							<ul class="talent">
+								<li>OS X</li>
+								<li>Windows XP/Vista</li>
+								<li class="last">Linux</li>
+							</ul>
+						</div>
+					</div><!--// .yui-gf-->
+
+					<div class="yui-gf">
+	
+						<div class="yui-u first">
+							<h2>Experience</h2>
+						</div><!--// .yui-u -->
+
+						<div class="yui-u">
+
+							<div class="job">
+								<h2>Facebook</h2>
+								<h3>Senior Interface Designer</h3>
+								<h4>2005-2007</h4>
+								<p>Intrinsicly enable optimal core competencies through corporate relationships. Phosfluorescently implement worldwide vortals and client-focused imperatives. Conveniently initiate virtual paradigms and top-line convergence. </p>
+							</div>
+
+							<div class="job">
+								<h2>Apple Inc.</h2>
+								<h3>Senior Interface Designer</h3>
+								<h4>2005-2007</h4>
+								<p>Progressively reconceptualize multifunctional "outside the box" thinking through inexpensive methods of empowerment. Compellingly morph extensive niche markets with mission-critical ideas. Phosfluorescently deliver bricks-and-clicks strategic theme areas rather than scalable benefits. </p>
+							</div>
+
+							<div class="job">
+								<h2>Microsoft</h2>
+								<h3>Principal and Creative Lead</h3>
+								<h4>2004-2005</h4>
+								<p>Intrinsicly transform flexible manufactured products without excellent intellectual capital. Energistically evisculate orthogonal architectures through covalent action items. Assertively incentivize sticky platforms without synergistic materials. </p>
+							</div>
+
+
+							<div class="job last">
+								<h2>International Business Machines (IBM)</h2>
+								<h3>Lead Web Designer</h3>
+								<h4>2001-2004</h4>
+								<p>Globally re-engineer cross-media schemas through viral methods of empowerment. Proactively grow long-term high-impact human capital and highly efficient innovation. Intrinsicly iterate excellent e-tailers with timely e-markets.</p>
+							</div>
+
+						</div><!--// .yui-u -->
+					</div><!--// .yui-gf -->
+
+
+					<div class="yui-gf last">
+						<div class="yui-u first">
+							<h2>Education</h2>
+						</div>
+						<div class="yui-u">
+							<h2>Indiana University - Bloomington, Indiana</h2>
+							<h3>Dual Major, Economics and English &mdash; <strong>4.0 GPA</strong> </h3>
+						</div>
+					</div><!--// .yui-gf -->
+
+
+				</div><!--// .yui-b -->
+			</div><!--// yui-main -->
+		</div><!--// bd -->
+
+		<div id="ft">
+			<p>Jonathan Doe &mdash; <a href="mailto:name@yourdomain.com">name@yourdomain.com</a> &mdash; (313) - 867-5309</p>
+		</div><!--// footer -->
+
+	</div><!-- // inner -->
+
+
+</div><!--// doc -->
+
 
 </body>
 </html>
-<?php
-		break;
-	case "text":
-		header("Content-type: text/plain");
-		print($bio['name']."\n\n");
-		if ($prefs['show_phone'] == 1) {
-			print(str_pad($bio['phone'], 50, ' '));
-		}
-		if ($prefs['show_address'] == 1) {
-			print(str_pad($bio['address'], 50, ' ', STR_PAD_LEFT)."\n"); 
-		}
-		if ($prefs['show_email'] == 1) {
-			print(str_pad($bio['email'], 50, ' '));
-		}
-		if ($prefs['show_address'] == 1) {
-			print(str_pad($bio['city'].', '.$bio['state'].' '.$bio['zip'], 50, ' ', STR_PAD_LEFT)); 
-		}
-		print("\n\n");
-		print('OBJECTIVE'."\n".str_pad('', 100, '-')."\n");
-		print(pad_and_wrap($data['objective'])."\n\n\n");
-		print('EXPERIENCE'."\n".str_pad('', 100, '-')."\n");
-		foreach ($data['jobs'] as $job) { 
-			if ($job['show'] == 1) {
-				print(str_pad($job['period'], 20, ' '));
-				print(str_pad($job['employer'], 55, ' '));
-				print(str_pad($job['location'], 25, ' ', STR_PAD_LEFT)."\n");
-				if (!empty($job['employer_info'])) {
-					print(pad_and_wrap($job['employer_info'])."\n");
-				}
-				foreach ($job['positions'] as $title => $position) {
-					print("\n".pad_and_wrap($title)."\n");
-					foreach ($position as $responsibility) {
-						print(pad_and_wrap($responsibility, 20, ' ', 80, '- ')."\n");
-					}
-				}
-			}
-			print("\n");
-		}
-		print("\n".'SKILLS, TECHNOLOGIES & PROJECTS'."\n".str_pad('', 100, '-')."\n");
-		foreach ($data['skills_technologies_projects'] as $temp) {
-			print(pad_and_wrap($temp, 20, ' ', 80, '- ')."\n");
-		}
-		print("\n\n".'EDUCATION & INTERESTS'."\n".str_pad('', 100, '-')."\n");
-		foreach ($data['education_interests'] as $temp) {
-			print(pad_and_wrap($temp, 20, ' ', 80, '- ')."\n");
-		}
-		print("\n\n".'References available upon request.'."\n\n");
-		break;
-}
-?>
+

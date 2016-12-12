@@ -65,7 +65,7 @@ class SkillBaseBean extends AbstractTDBMObject implements \JsonSerializable
      * @param UserBean $object
      */
     public function setUser(UserBean $object = null) {
-        $this->setRef('fk_skill_user', $object, 'skill');
+        $this->setRef('fk_skill_user', $object,'skill');
     }
 
     /**

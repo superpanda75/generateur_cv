@@ -1,27 +1,3 @@
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
-
-    <!-- Bootstrap core CSS -->
-    <link href="View/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-
-    <!--<link href="View/css/style.css" rel="stylesheet"><link rel="stylesheet" href="View/css/rating.css">-->
-    <title>Mon CV</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script src="View/js/jquery-3.1.1.min.js"></script>
-    <script src="View/js/bootstrap.min.js"></script>
-</head>
 
 
 <div class="tab-content">
@@ -33,7 +9,7 @@
         <div class="row">
             <div class="col-md-3"></div> <!--permet de centrer le formulaire au milieu-->
             <div class="col-md-6">
-                <form id="info_p" action="{{ constant('ROOT_URL')~'form/save' }}" method="post">
+                <form id="info_p" action="{{ constant('ROOT_URL')~'form/cvModel' }}" method="post">
                     <h2>Mes infos personnelles</h2><br/>
                     <div class="form-group">
                         <label for="name">Nom</label>
@@ -51,39 +27,31 @@
                     <hr/>
                     <br/>
                     <h2>Coordonnées</h2><br/>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input class="form-control" type="email" placeholder="exemple@fournisseur.com" name="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Telephone</label>
-                            <input class="form-control" type="tel" placeholder="06 xx xx xx xx" name="phone">
-                        </div>
-                    </form>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input class="form-control" type="email" placeholder="exemple@fournisseur.com" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telephone</label>
+                        <input class="form-control" type="tel" placeholder="06 xx xx xx xx" name="phone">
+                    </div>
                     <div class="form-group row">
                         <label for="adress" class="col-xs-2 col-form-label">Adresse</label>
-                        <div class="col-xs-10">
-                            <input class="form-control" type="text" placeholder="20, rue de la Horde" name="adress">
-                        </div>
+                        <input class="form-control" type="text" placeholder="20, rue de la Horde" name="adress">
                     </div>
                     <div class="form-group row">
                         <label for="city" class="col-xs-2 col-form-label">Ville</label>
-                        <div class="col-xs-10">
-                            <input class="form-control" type="text" placeholder="Orgrimmar" name="city">
-                        </div>
+                        <input class="form-control" type="text" placeholder="Orgrimmar" name="city">
                     </div>
-                    <div class="form-inline">
+                    <div class="form-group formulaire">
+                        <label for="postcode">Code Postal</label>
+                        <input class="form-control" type="number" placeholder="75001" name="postcode">
+                    </div>
+                    <div class="form-group formulaire">
+                        <label for="adress_number">n° rue</label>
+                        <input class="form-control" type="number" placeholder="42" name="adress_number">
+                    </div>
 
-                        <div class="form-group formulaire">
-                            <label for="postcode">Code Postal</label>
-                            <input class="form-control" type="number" placeholder="75001" name="postcode">
-                        </div>
-                        <div class="form-group formulaire">
-                            <label for="adress_number">n° rue</label>
-                            <input class="form-control" type="number" placeholder="42" name="adress_number">
-                        </div>
-                    </div>
 
                     </br>
                     </br>
@@ -95,20 +63,19 @@
                                                             COMPETENCES
        #################################################################################################################-->
 
-
                     <h2>Mes compétences</h2><br/>
                     <h3>Compétence 1</h3>
                     <div class="form-group">
                         <label for="skill_title1">Titre</label>
-                        <input type="text" class="form-control" id="skill_title1" placeholder="PHP, Java, Srum...">
+                        <input type="text" class="form-control" id="skill_title1" placeholder="PHP, Java, Srum..." name="skill_title1">
                     </div>
                     <div class="form-group">
                         <label for="skill_comm1">Commentaire</label>
-                        <input type="text" class="form-control" maxlength="30" id="skill_comm1" placeholder="(30 caractères max)">
+                        <input type="text" class="form-control" maxlength="30" id="skill_comm1" placeholder="(30 caractères max)" name="skill_comm1">
                     </div>
                     <div class="form-group">
                         <label for="level1">Niveau de compétences</label>
-                        <select class=form-control id="level1">
+                        <select class=form-control id="level1" name="level1">
                             <option value=1>1<small>/10</small></option>
                             <option value=2>2<small>/10</small></option>
                             <option value=3>3<small>/10</small></option>
@@ -127,15 +94,15 @@
                     <h3>Compétence 2</h3>
                     <div class="form-group">
                         <label for="skill_title2">Titre</label>
-                        <input type="text" class="form-control" id="skill_title2" placeholder="PHP, Java, Srum...">
+                        <input type="text" class="form-control" id="skill_title2" placeholder="PHP, Java, Srum..." name="skill_title2">
                     </div>
                     <div class="form-group">
                         <label for="skill_comm2">Commentaire</label>
-                        <input type="text" class="form-control" maxlength="30" id="skill_comm2" placeholder="(30 caractères max)">
+                        <input type="text" class="form-control" maxlength="30" id="skill_comm2" placeholder="(30 caractères max)" name="skill_comm2">
                     </div>
                     <div class="form-group">
-                        <label for="level2">Niveau de compétences</label>
-                        <select class=form-control id="level2">
+                        <label for="level2" >Niveau de compétences</label>
+                        <select class=form-control id="level2" name="level2">
                             <option value=1>1<small>/10</small></option>
                             <option value=2>2<small>/10</small></option>
                             <option value=3>3<small>/10</small></option>
@@ -154,15 +121,15 @@
                     <h3>Compétence 3</h3>
                     <div class="form-group">
                         <label for="skill_title3">Titre</label>
-                        <input type="text" class="form-control" id="skill_title3" placeholder="PHP, Java, Srum...">
+                        <input type="text" class="form-control" id="skill_title3" placeholder="PHP, Java, Srum..." name="skill_title3">
                     </div>
                     <div class="form-group">
                         <label for="skill_comm3">Commentaire</label>
-                        <input type="text" class="form-control" maxlength="30" id="skill_comm3" placeholder="(30 caractères max)">
+                        <input type="text" class="form-control" maxlength="30" id="skill_comm3" placeholder="(30 caractères max)" name="skill_comm3">
                     </div>
                     <div class="form-group">
-                        <label for="level3">Niveau de compétences</label>
-                        <select class=form-control id="level3">
+                        <label for="level3" >Niveau de compétences</label>
+                        <select class=form-control id="level3" name="level3">
                             <option value=1>1<small>/10</small></option>
                             <option value=2>2<small>/10</small></option>
                             <option value=3>3<small>/10</small></option>
@@ -181,15 +148,15 @@
                     <h3>Compétence 4</h3>
                     <div class="form-group">
                         <label for="skill_title4">Titre</label>
-                        <input type="text" class="form-control" id="skill_title4" placeholder="PHP, Java, Srum...">
+                        <input type="text" class="form-control" id="skill_title4" placeholder="PHP, Java, Srum..." name="skill_title4" name="skill_title4">
                     </div>
                     <div class="form-group">
                         <label for="skill_comm4">Commentaire</label>
-                        <input type="text" class="form-control" maxlength="30" id="skill_comm4" placeholder="(30 caractères max)">
+                        <input type="text" class="form-control" maxlength="30" id="skill_comm4" placeholder="(30 caractères max)" name="skill_comm4">
                     </div>
                     <div class="form-group">
                         <label for="level4">Niveau de compétences</label>
-                        <select class=form-control id="level4">
+                        <select class=form-control id="level4" name="level4">
                             <option value=1>1<small>/10</small></option>
                             <option value=2>2<small>/10</small></option>
                             <option value=3>3<small>/10</small></option>
@@ -218,19 +185,19 @@
                     <h3>formation 1</h3>
                     <div class="form-group">
                         <label for="form_title1">Titre de la formation</label>
-                        <input type="text" class="form-control" id="form_title1" placeholder="Licence informatique">
+                        <input type="text" class="form-control" id="form_title1" placeholder="Licence informatique" name="form_title1">
                     </div>
                     <div class="form-group">
                         <label for="form_lieu1">lieu de la formation</label>
-                        <input type="text" class="form-control" id="form_lieu1" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999">
+                        <input type="text" class="form-control" id="form_lieu1" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999" name="form_lieu1">
                     </div>
                     <div class="form-group">
-                        <label for="form_etablissement1">lieu de la formation</label>
-                        <input type="text" class="form-control" id="form_etablissement1" placeholder="Paris V, la Sorbonne">
+                        <label for="form_etablissement1">Établissement</label>
+                        <input type="text" class="form-control" id="form_etablissement1" placeholder="Paris V, la Sorbonne" name="form_etablissement1">
                     </div>
                     <div class="form-group">
                         <label for="form_state1">Etat</label>
-                        <select class="form-control" id="form_state1">
+                        <select class="form-control" id="form_state1" name="form_state1">
                             <option value='acquis'>Acquis</option>
                             <option value='en cours'>En cours...</option>
                             <option value='a venir'>À venir...</option>
@@ -238,13 +205,13 @@
                     </div>
                     <div>
                         <label for="start_date_form1">Date de début</label>
-                        <input id="start_date_form1" type="date" value="2015-01-01">
-                        <span class="result"></span>
+                        <input id="start_date_form1" type="date" value="2015-01-01" name="start_date_form1">
+
                     </div>
                     <div>
                         <label for="end_date_form1">Date de fin</label>
-                        <input id="end_date_form1" type="date" value="2016-01-01">
-                        <span class="result"></span>
+                        <input id="end_date_form1" type="date" value="2016-01-01" name="end_date_form1">
+
                     </div>
                     </br>
                     <hr/>
@@ -252,19 +219,19 @@
                     <h3>formation 2</h3>
                     <div class="form-group">
                         <label for="form_title2">Titre de la formation</label>
-                        <input type="text" class="form-control" id="form_title2" placeholder="Licence informatique">
+                        <input type="text" class="form-control" id="form_title2" placeholder="Licence informatique" name="form_title2">
                     </div>
                     <div class="form-group">
-                        <label for="form_lieu2">lieu de la formation</label>
-                        <input type="text" class="form-control" id="form_lieu2" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999">
+                        <label for="form_lieu2">Établissement</label>
+                        <input type="text" class="form-control" id="form_lieu2" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999" name="form_lieu2">
                     </div>
                     <div class="form-group">
                         <label for="form_etablissement2">lieu de la formation</label>
-                        <input type="text" class="form-control" id="form_etablissement2" placeholder="Paris V, la Sorbonne">
+                        <input type="text" class="form-control" id="form_etablissement2" placeholder="Paris V, la Sorbonne" name="form_etablissement2">
                     </div>
                     <div class="form-group">
                         <label for="form_state2">Etat</label>
-                        <select class="form-control" id="form_state2">
+                        <select class="form-control" id="form_state2" name="form_state2">
                             <option value='acquis'>Acquis</option>
                             <option value='en cours'>En cours...</option>
                             <option value='a venir'>À venir...</option>
@@ -272,13 +239,11 @@
                     </div>
                     <div>
                         <label for="start_date_form2">Date de début</label>
-                        <input id="start_date_form2" type="date" value="2015-01-01">
-                        <span class="result"></span>
+                        <input id="start_date_form2" type="date" value="2015-01-01" name="start_date_form2">
                     </div>
                     <div>
                         <label for="end_date_form2">Date de fin</label>
-                        <input id="end_date_form2" type="date" value="2016-01-01">
-                        <span class="result"></span>
+                        <input id="end_date_form2" type="date" value="2016-01-01" name="end_date_form2">
                     </div>
                     </br>
                     <hr/>
@@ -286,19 +251,19 @@
                     <h3>formation 3</h3>
                     <div class="form-group">
                         <label for="form_title3">Titre de la formation</label>
-                        <input type="text" class="form-control" id="form_title3" placeholder="Licence informatique">
+                        <input type="text" class="form-control" id="form_title3" placeholder="Licence informatique" name="form_title3">
                     </div>
                     <div class="form-group">
-                        <label for="form_lieu3">lieu de la formation</label>
-                        <input type="text" class="form-control" id="form_lieu3" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999">
+                        <label for="form_lieu3">Établissement</label>
+                        <input type="text" class="form-control" id="form_lieu3" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999" name="form_lieu3">
                     </div>
                     <div class="form-group">
                         <label for="form_etablissement3">lieu de la formation</label>
-                        <input type="text" class="form-control" id="form_etablissement3" placeholder="Paris V, la Sorbonne">
+                        <input type="text" class="form-control" id="form_etablissement3" placeholder="Paris V, la Sorbonne" name="form_etablissement3">
                     </div>
                     <div class="form-group">
                         <label for="form_state3">Etat</label>
-                        <select class="form-control" id="form_state3">
+                        <select class="form-control" id="form_state3" name="form_state3">
                             <option value='acquis'>Acquis</option>
                             <option value='en cours'>En cours...</option>
                             <option value='a venir'>À venir...</option>
@@ -306,13 +271,11 @@
                     </div>
                     <div>
                         <label for="start_date_form3">Date de début</label>
-                        <input id="start_date_form3" type="date" value="2015-01-01">
-                        <span class="result"></span>
+                        <input id="start_date_form3" type="date" value="2015-01-01" name="start_date_form3">
                     </div>
                     <div>
                         <label for="end_date_form3">Date de fin</label>
-                        <input id="end_date_form3" type="date" value="2016-01-01">
-                        <span class="result"></span>
+                        <input id="end_date_form3" type="date" value="2016-01-01" name="end_date_form3">
                     </div>
                     </br>
                     <hr/>
@@ -320,19 +283,19 @@
                     <h3>formation 4</h3>
                     <div class="form-group">
                         <label for="form_title4">Titre de la formation</label>
-                        <input type="text" class="form-control" id="form_title4" placeholder="Licence informatique">
+                        <input type="text" class="form-control" id="form_title4" placeholder="Licence informatique" name="form_title4">
                     </div>
                     <div class="form-group">
                         <label for="form_lieu4">lieu de la formation</label>
-                        <input type="text" class="form-control" id="form_lieu4" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999">
+                        <input type="text" class="form-control" id="form_lieu4" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999" name="form_lieu4">
                     </div>
                     <div class="form-group">
-                        <label for="form_etablissement4">lieu de la formation</label>
-                        <input type="text" class="form-control" id="form_etablissement4" placeholder="Paris V, la Sorbonne">
+                        <label for="form_etablissement4">Établissement</label>
+                        <input type="text" class="form-control" id="form_etablissement4" placeholder="Paris V, la Sorbonne" name="form_etablissement4">
                     </div>
                     <div class="form-group">
                         <label for="form_state4">Etat</label>
-                        <select class="form-control" id="form_state4">
+                        <select class="form-control" id="form_state4" name="form_state4">
                             <option value='acquis'>Acquis</option>
                             <option value='en cours'>En cours...</option>
                             <option value='a venir'>À venir...</option>
@@ -340,13 +303,11 @@
                     </div>
                     <div>
                         <label for="start_date_form4">Date de début</label>
-                        <input id="start_date_form4" type="date" value="2015-01-01">
-                        <span class="result"></span>
+                        <input id="start_date_form4" type="date" value="2015-01-01" name="start_date_form4">
                     </div>
                     <div>
                         <label for="end_date_form4">Date de fin</label>
-                        <input id="end_date_form4" type="date" value="2016-01-01">
-                        <span class="result"></span>
+                        <input id="end_date_form4" type="date" value="2016-01-01" name="end_date_form4">
                     </div>
                     </br>
                     </br>
@@ -360,129 +321,130 @@
 
 
 
-                <h2>Mes expériences</h2><br/>
-                <h3>expérience 1</h3>
-                <div class="form-group">
-                    <label for="know_title1">Titre de l'expérience</label>
-                    <input type="text" class="form-control" id="know_title1" placeholder="Développeur J2E">
-                </div>
-                <div class="form-group">
-                    <label for="know_lieu1">lieu de l'expérience</label>
-                    <input type="text" class="form-control" id="know_lieu1" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999">
-                </div>
-                <div class="form-group">
-                    <label for="know_societe1">Société</label>
-                    <input type="text" class="form-control" id="know_societe1" placeholder="Microsoft">
-                </div>
-                <div class="form-group">
-                    <label for="know_comm1">Commentaire</label>
-                    <input type="text" class="form-control" id="know_comm1" placeholder="Gestion des missions">
-                </div>
-                <div>
-                    <label for="start_date_know1">Date de début</label>
-                    <input id="start_date_know1" type="date" value="2015-01-01">
-                    <span class="result"></span>
-                </div>
-                <div>
-                    <label for="end_date_know1">Date de fin</label>
-                    <input id="end_date_know1" type="date" value="2016-01-01">
-                    <span class="result"></span>
-                </div>
-                    </br>
-                    <hr/>
-                    </br>
-                <h3>expérience 2</h3>
-                <div class="form-group">
-                    <label for="know_title2">Titre de l'expérience l'expérience</label>
-                    <input type="text" class="form-control" id="know_title2" placeholder="Développeur J2E">
-                </div>
-                <div class="form-group">
-                    <label for="know_lieu2">lieu de l'expérience</label>
-                    <input type="text" class="form-control" id="know_lieu2" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999">
-                </div>
-                <div class="form-group">
-                    <label for="know_societe2">Société</label>
-                    <input type="text" class="form-control" id="know_societe2" placeholder="Microsoft">
-                </div>
-                <div class="form-group">
-                    <label for="know_comm2">Commentaire</label>
-                    <input type="text" class="form-control" id="know_comm2" placeholder="Gestion des missions">
-                </div>
-                <div>
-                    <label for="start_date_know2">Date de début</label>
-                    <input id="start_date_know2" type="date" value="2015-01-01">
-                    <span class="result"></span>
-                </div>
-                <div>
-                    <label for="end_date_know2">Date de fin</label>
-                    <input id="end_date_know2" type="date" value="2016-01-01">
-                    <span class="result"></span>
-                </div>
-                    </br>
-                    <hr/>
-                    </br>
-                <h3>expérience 3</h3>
-                <div class="form-group">
-                    <label for="eexpitle3">Titre de l'expérience</label>
-                    <input type="text" class="form-control" id="know_title3" placeholder="Développeur J2E">
-                </div>
-                <div class="form-group">
-                    <label for="know_lieu3">lieu de l'expérience</label>
-                    <input type="text" class="form-control" id="know_lieu3" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999">
-                </div>
-                <div class="form-group">
-                    <label for="know_societe3">Société</label>
-                    <input type="text" class="form-control" id="know_societe3" placeholder="Microsoft">
-                </div>
-                <div class="form-group">
-                        <label for="know_comm3">Commentaire</label>
-                        <input type="text" class="form-control" id="know_comm3" placeholder="Gestion des missions">
-                </div>
-                <div>
-                    <label for="start_date_know3">Date de début</label>
-                    <input id="start_date_know3" type="date" value="2015-01-01">
-                    <span class="result"></span>
-                </div>
-                <div>
-                    <label for="end_date_know3">Date de fin</label>
-                    <input id="end_date_know3" type="date" value="2016-01-01">
-                    <span class="result"></span>
-                </div>
-                    </br>
-                    <hr/>
-                    </br>
-                <h3>expérience 4</h3>
-                <div class="form-group">
-                    <label for="know_title4">Titre de l'expérience</label>
-                    <input type="text" class="form-control" id="know_title4" placeholder="Développeur J2E">
-                </div>
-                <div class="form-group">
-                    <label for="know_lieu4">lieu de l'expérience</label>
-                    <input type="text" class="form-control" id="know_lieu4" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999">
-                </div>
-                <div class="form-group">
-                    <label for="know_societe4">Société</label>
-                    <input type="text" class="form-control" id="know_societe4" placeholder="Microsoft">
-                </div>
-                <div class="form-group">
-                    <label for="know_comm4">Commentaire</label>
-                    <input type="text" class="form-control" id="know_comm4" placeholder="Gestion des missions">
-                </div>
-                <div>
-                    <label for="start_date_know4">Date de début</label>
-                    <input id="start_date_know4" type="date" value="2015-01-01">
-                    <span class="result"></span>
-                </div>
-                <div>
-                    <label for="end_date_know4">Date de fin</label>
-                    <input id="end_date_know4" type="date" value="2016-01-01">
-                    <span class="result"></span>
-                </div>
+                    <h2>Mes expériences</h2><br/>
+                    <h3>expérience 1</h3>
+                    <div class="form-group">
+                        <label for="know_title1">Titre de l'expérience</label>
+                        <input type="text" class="form-control" id="know_title1" placeholder="Développeur J2E" name="know_title1">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_lieu1">lieu de l'expérience</label>
+                        <input type="text" class="form-control" id="know_lieu1" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999" name="know_lieu1">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_societe1">Société</label>
+                        <input type="text" class="form-control" id="know_societe1" placeholder="Microsoft" name="know_societe1">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_comm1">Commentaire</label>
+                        <input type="text" class="form-control" id="know_comm1" placeholder="Gestion des missions" name="know_comm1">
+                    </div>
+                    <div>
+                        <label for="start_date_know1">Date de début</label>
+                        <input id="start_date_know1" type="date" value="2015-01-01" name="start_date_know1">
+                        <span class="result"></span>
+                    </div>
+                    <div>
+                        <label for="end_date_know1">Date de fin</label>
+                        <input id="end_date_know1" type="date" value="2016-01-01" name="end_date_know1">
+                        <span class="result"></span>
+                    </div>
+                        </br>
+                        <hr/>
+                        </br>
+                    <h3>expérience 2</h3>
+                    <div class="form-group">
+                        <label for="know_title2">Titre de l'expérience l'expérience</label>
+                        <input type="text" class="form-control" id="know_title2" placeholder="Développeur J2E" name="know_title2">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_lieu2">lieu de l'expérience</label>
+                        <input type="text" class="form-control" id="know_lieu2" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999" name="know_lieu2">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_societe2">Société</label>
+                        <input type="text" class="form-control" id="know_societe2" placeholder="Microsoft" name="know_societe2">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_comm2">Commentaire</label>
+                        <input type="text" class="form-control" id="know_comm2" placeholder="Gestion des missions" name="know_comm2">
+                    </div>
+                    <div>
+                        <label for="start_date_know2">Date de début</label>
+                        <input id="start_date_know2" type="date" value="2015-01-01" name="start_date_know2">
+                        <span class="result"></span>
+                    </div>
+                    <div>
+                        <label for="end_date_know2">Date de fin</label>
+                        <input id="end_date_know2" type="date" value="2016-01-01" name="end_date_know2">
+                        <span class="result"></span>
+                    </div>
+                        </br>
+                        <hr/>
+                        </br>
+                    <h3>expérience 3</h3>
+                    <div class="form-group">
+                        <label for="eexpitle3">Titre de l'expérience</label>
+                        <input type="text" class="form-control" id="know_title3" placeholder="Développeur J2E" name="know_title3">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_lieu3">lieu de l'expérience</label>
+                        <input type="text" class="form-control" id="know_lieu3" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999" name="know_lieu3">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_societe3">Société</label>
+                        <input type="text" class="form-control" id="know_societe3" placeholder="Microsoft" name="know_societe3">
+                    </div>
+                    <div class="form-group">
+                            <label for="know_comm3">Commentaire</label>
+                            <input type="text" class="form-control" id="know_comm3" placeholder="Gestion des missions" name="know_comm3">
+                    </div>
+                    <div>
+                        <label for="start_date_know3">Date de début</label>
+                        <input id="start_date_know3" type="date" value="2015-01-01" name="start_date_know3">
+                        <span class="result"></span>
+                    </div>
+                    <div>
+                        <label for="end_date_know3">Date de fin</label>
+                        <input id="end_date_know3" type="date" value="2016-01-01" name="end_date_know3">
+                        <span class="result"></span>
+                    </div>
+                        </br>
+                        <hr/>
+                        </br>
+                    <h3>expérience 4</h3>
+                    <div class="form-group">
+                        <label for="know_title4">Titre de l'expérience</label>
+                        <input type="text" class="form-control" id="know_title4" placeholder="Développeur J2E" name="know_title4">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_lieu4">lieu de l'expérience</label>
+                        <input type="text" class="form-control" id="know_lieu4" placeholder="Azeroth, 1 rue d'Ogrimmar 99 999" name="know_lieu4">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_societe4">Société</label>
+                        <input type="text" class="form-control" id="know_societe4" placeholder="Microsoft" name="know_societe4">
+                    </div>
+                    <div class="form-group">
+                        <label for="know_comm4">Commentaire</label>
+                        <input type="text" class="form-control" id="know_comm4" placeholder="Gestion des missions" name="know_comm4">
+                    </div>
+                    <div>
+                        <label for="start_date_know4">Date de début</label>
+                        <input id="start_date_know4" type="date" value="2015-01-01" name="start_date_know4">
+                        <span class="result"></span>
+                    </div>
+                    <div>
+                        <label for="end_date_know4">Date de fin</label>
+                        <input id="end_date_know4" type="date" value="2016-01-01" name="end_date_know4">
+                        <span class="result"></span>
+                    </div>
+                    <br/>
+                    <br/>
                 </form>
+                <button class="btn-info col-md-12" form="info_p" type="submit"  value="Submit">Choisir mon modèle de CV</button>
                 <br/>
                 <br/>
-                <br/>
-                <button class="btn-info col-md-12" href="#skill"  form="info_p" value="Submit">Choisir mon modèle de CV</button>
                 <br/>
                 <br/>
                 <br/>

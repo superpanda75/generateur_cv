@@ -1132,6 +1132,60 @@ return $driver;
       ),
     ),
   ),
+  'getCvForm' => 
+  array (
+    'class' => 'generateur_cv\\Controllers\\GetCvForm',
+    'external' => false,
+    'weak' => false,
+    'constructor' => 
+    array (
+      0 => 
+      array (
+        'value' => 'psr.errorLogLogger',
+        'parametertype' => 'object',
+        'type' => 'string',
+        'metadata' => 
+        array (
+        ),
+      ),
+      1 => 
+      array (
+        'value' => 'bootstrapTemplate',
+        'parametertype' => 'object',
+        'type' => 'string',
+        'metadata' => 
+        array (
+        ),
+      ),
+      2 => 
+      array (
+        'value' => 'block.content',
+        'parametertype' => 'object',
+        'type' => 'string',
+        'metadata' => 
+        array (
+        ),
+      ),
+      3 => 
+      array (
+        'value' => 'daoFactory',
+        'parametertype' => 'object',
+        'type' => 'string',
+        'metadata' => 
+        array (
+        ),
+      ),
+      4 => 
+      array (
+        'value' => 'twigEnvironment',
+        'parametertype' => 'object',
+        'type' => 'string',
+        'metadata' => 
+        array (
+        ),
+      ),
+    ),
+  ),
   'helperSet' => 
   array (
     'class' => 'Mouf\\Console\\HelperSet',
@@ -1761,14 +1815,6 @@ return new Stash\\Pool($compositeDriver);',
           'skill' => 'generateur_cv\\Model\\Bean\\SkillBean',
           'user' => 'generateur_cv\\Model\\Bean\\UserBean',
         ),
-        'type' => 'string',
-        'metadata' => 
-        array (
-        ),
-      ),
-      'setFetchMode' => 
-      array (
-        'value' => '',
         'type' => 'string',
         'metadata' => 
         array (
@@ -2550,6 +2596,13 @@ return rtrim(sys_get_temp_dir(), '/\\').'/mouftwigtemplatemain_'.$posixGetuid.st
 	 */
 	 public static function getWhoopsMiddleware() {
 	 	return MoufManager::getMoufManager()->get('whoopsMiddleware');
+	 }
+
+	/**
+	 * @return generateur_cv\Controllers\GetCvForm
+	 */
+	 public static function getGetCvForm() {
+	 	return MoufManager::getMoufManager()->get('getCvForm');
 	 }
 
 }
