@@ -50,6 +50,12 @@ $moufManager->getConfigManager()->setConstantsDefinitionArray(array (
     'type' => 'string',
     'comment' => 'The password to access the database.',
   ),
+  'DB_CONNECT' => 
+  array (
+    'defaultValue' => '""',
+    'type' => 'string',
+    'comment' => 'this constant permit to get db access by mysqli instructions',
+  ),
 ));
 
 $moufManager->setAllVariables(array (
@@ -2403,6 +2409,13 @@ return rtrim(sys_get_temp_dir(), '/\\').'/mouftwigtemplatemain_'.$posixGetuid.st
 	 }
 
 	/**
+	 * @return generateur_cv\Controllers\GetCvForm
+	 */
+	 public static function getGetCvForm() {
+	 	return MoufManager::getMoufManager()->get('getCvForm');
+	 }
+
+	/**
 	 * @return Mouf\Console\HelperSet
 	 */
 	 public static function getHelperSet() {
@@ -2596,13 +2609,6 @@ return rtrim(sys_get_temp_dir(), '/\\').'/mouftwigtemplatemain_'.$posixGetuid.st
 	 */
 	 public static function getWhoopsMiddleware() {
 	 	return MoufManager::getMoufManager()->get('whoopsMiddleware');
-	 }
-
-	/**
-	 * @return generateur_cv\Controllers\GetCvForm
-	 */
-	 public static function getGetCvForm() {
-	 	return MoufManager::getMoufManager()->get('getCvForm');
 	 }
 
 }

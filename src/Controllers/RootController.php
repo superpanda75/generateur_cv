@@ -9,6 +9,8 @@ use generateur_cv\Model\Bean\FormationBean;
 use generateur_cv\Model\Dao\FormationDao;
 use generateur_cv\Model\Bean\KnowledgeBean;
 use generateur_cv\Model\Dao\KnowledgeDao;
+use Mouf\Database\TDBM\TDBMService;
+use Mouf\Database\TDBM\ResultIterator;
 use Mouf\Mvc\Splash\Annotations\Get;
 use Mouf\Mvc\Splash\Annotations\Post;
 use Mouf\Mvc\Splash\Annotations\Put;
@@ -46,6 +48,12 @@ class RootController
      * @var HtmlBlock
      */
     private $content;
+
+    /**
+     * The main content block of the page.
+     * @var TDBMService
+     */
+    private $tdbmService;
 
     /**
      * @var array
@@ -130,7 +138,6 @@ class RootController
      */
     public function editCvForm()
     {
-
         $this->content->addHtmlElement(new TwigTemplate($this->twig, 'views/root/form.twig'));
 
         return new HtmlResponse($this->template);
@@ -143,27 +150,32 @@ class RootController
 
     public function saveCvForm(RequestInterface $request)
     {
+        $link = mysqli_connect("localhost", "root", "", "cv") or die($link);
         if ($request) {
+
             $result = $request->getParsedBody();
             $userObj = new UserBean();
 
-            $userObj->setName($result['name']);
-            $userObj->setFirstname($result['firstname']);
-            $userObj->setAge($result['age']);
-            $userObj->setEmail($result['email']);
-            $userObj->setPhone($result['phone']);
-            $userObj->setAdress($result['adress']);
-            $userObj->setCity($result['city']);
-            $userObj->setPostcode($result['postcode']);
-            $userObj->setAdressNumber($result['adress_number']);
+            $userObj->setName(mysqli_real_escape_string($link,$result['name']));
+            $userObj->setFirstname(mysqli_real_escape_string($link,$result['firstname']));
+            $userObj->setAge(mysqli_real_escape_string($link,$result['age']));
+            $userObj->setEmail(mysqli_real_escape_string($link,$result['email']));
+            $userObj->setPhone(mysqli_real_escape_string($link,$result['phone']));
+            $userObj->setAdress(mysqli_real_escape_string($link,$result['adress']));
+            $userObj->setCity(mysqli_real_escape_string($link,$result['city']));
+            $userObj->setPostcode(mysqli_real_escape_string($link,$result['postcode']));
+            $userObj->setAdressNumber(mysqli_real_escape_string($link,$result['adress_number']));
 
             $this->user->save($userObj);
 
-            $skillObj = new SkillBean();
+            /*$skillObj = new SkillBean();
             $formationObj = new FormationBean();
-            $knowledgeObj = new KnowledgeBean();
+            $knowledgeObj = new KnowledgeBean();*/
 
             for ($i = 1; $i <= 4; $i++) {
+                $skillObj = new SkillBean();
+                $formationObj = new FormationBean();
+                $knowledgeObj = new KnowledgeBean();
 
                 //$start_date_form = ($result['start_date_form'.$i]);
                 //$end_date_form = $result['end_date_form'.$i];
@@ -171,50 +183,60 @@ class RootController
                 //$end_date_know = $result['end_date_know'.$i];
 
 
-                $skillObj->setTitle($result['skill_title'.$i]);
-                $skillObj->setComment($result['skill_comm'.$i]);
-                $skillObj->setLevel($result['level'.$i]);
-                $skillObj->setUser();
+                $skillObj->setTitle(mysqli_real_escape_string($link,$result['skill_title'.$i]));
+                $skillObj->setComment(mysqli_real_escape_string($link,$result['skill_comm'.$i]));
+                $skillObj->setLevel(mysqli_real_escape_string($link,$result['level'.$i]));
+
 
                 $this->skill->save($skillObj);
 
-                $formStartDateObj = new \DateTime($result['start_date_form'.$i]);
-                $formEndDateObj = new \DateTime($result['end_date_form'.$i]);
+                $formStartDateObj = new \DateTime(mysqli_real_escape_string($link,$result['start_date_form'.$i]));
+                $formEndDateObj = new \DateTime(mysqli_real_escape_string($link,$result['end_date_form'.$i]));
 
 
-                $formationObj->setTitle($result['form_title'.$i]);
-                $formationObj->setAdress($result['form_lieu'.$i]);
-                $formationObj->setEstablishment($result['form_etablissement'.$i]);
-                $formationObj->setState($result['form_state'.$i]);
+                $formationObj->setTitle(mysqli_real_escape_string($link,$result['form_title'.$i]));
+                $formationObj->setAdress(mysqli_real_escape_string($link,$result['form_lieu'.$i]));
+                $formationObj->setEstablishment(mysqli_real_escape_string($link,$result['form_etablissement'.$i]));
+                $formationObj->setState(mysqli_real_escape_string($link,$result['form_state'.$i]));
                 $formationObj->setStartDate($formStartDateObj);
                 $formationObj->setEndDate($formEndDateObj);
-                $formationObj->setUser();
+
 
                 $this->formation->save($formationObj);
 
 
-                $knowStartDateObj = new \DateTime($result['start_date_know'.$i]);
-                $knowEndDateObj = new \DateTime($result['end_date_know'.$i]);
+                $knowStartDateObj = new \DateTime(mysqli_real_escape_string($link,$result['start_date_know'.$i]));
+                $knowEndDateObj = new \DateTime(mysqli_real_escape_string($link,$result['end_date_know'.$i]));
 
 
-                $knowledgeObj->setTitle($result['know_title'.$i]);
-                $knowledgeObj->setAdress($result['know_lieu'.$i]);
-                $knowledgeObj->setCompany($result['know_societe'.$i]);
-                $knowledgeObj->setComment($result['know_comm'.$i]);
+                $knowledgeObj->setTitle(mysqli_real_escape_string($link,$result['know_title'.$i]));
+                $knowledgeObj->setAdress(mysqli_real_escape_string($link,$result['know_lieu'.$i]));
+                $knowledgeObj->setCompany(mysqli_real_escape_string($link,$result['know_societe'.$i]));
+                $knowledgeObj->setComment(mysqli_real_escape_string($link,$result['know_comm'.$i]));
                 $knowledgeObj->setStartDate($knowStartDateObj);
                 $knowledgeObj->setEndDate($knowEndDateObj);
-                $knowledgeObj->setUser();
 
+                $this->
 
                 $this->knowledge->save($knowledgeObj);
-
             }
         }
-
-
         $this->content->addHtmlElement(new TwigTemplate($this->twig, 'views/root/cvModels.twig'));
-
         return new HtmlResponse($this->template);
+    }
+    /**
+     * @URL("/form/yourCv")
+     *
+     */
+    public function yourCv(){
+        $user_id = $this->user->getUserMaxId();
+
+        $user_data = $this->user->getUserData($user_id[0]['max_id']);
+        $user_skill = $this->skill->getSkillUser($user_id[0]['max_id']);
+        $user_knowledge = $this->knowledge->getKnowledgeUser($user_id[0]['max_id']);
+        $user_formation = $this->formation->getFormationUser($user_id[0]['max_id']);
+
+        
 
     }
 }

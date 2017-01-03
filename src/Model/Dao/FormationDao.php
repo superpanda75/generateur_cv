@@ -14,5 +14,15 @@ use generateur_cv\Model\Dao\Generated\FormationBaseDao;
  */
 class FormationDao extends FormationBaseDao
 {
-
+    /**
+     * return formation data for last inserted user
+     * @param int $id
+     * @return array
+     */
+    public function getFormationUser($id){
+        $link = mysqli_connect("localhost","root","","cv") or die($link);
+        $sql = mysqli_query($link,'SELECT * FROM formation WHERE user = '.$id);
+        $return = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+        return $return;
+    }
 }

@@ -58,8 +58,7 @@ class GetCvForm {
      * @param DaoFactory $daoFactory The object in charge of retrieving DAOs
      * @param Twig_Environment $twig The Twig environment (used to render Twig templates)
      */
-    public function __construct(LoggerInterface $logger, TemplateInterface $template, HtmlBlock $content, DaoFactory $daoFactory, Twig_Environment $twig) {
-        $this->logger = $logger;
+    public function __construct(TemplateInterface $template, HtmlBlock $content, DaoFactory $daoFactory, Twig_Environment $twig) {
         $this->template = $template;
         $this->content = $content;
         $this->daoFactory = $daoFactory;
@@ -72,10 +71,8 @@ class GetCvForm {
      * @Get
      */
    /* public function index() {
-        // TODO: write content of action here
 
-        // Let's add the twig file to the template.
-        $this->content->addHtmlElement(new TwigTemplate($this->twig, 'views/getCvForm/cvModels.twig', array("message"=>"world")));
+   $this->content->addHtmlElement(new TwigTemplate($this->twig, 'views/root/cvModels.twig'));
 
         return new HtmlResponse($this->template);
     }*/

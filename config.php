@@ -33,3 +33,7 @@ define('DB_USERNAME', 'root');
  * The password to access the database.
  */
 define('DB_PASSWORD', '');
+/**
+ * this constant permit to get db access by mysqli instructions
+ */
+define('DB_CONNECT', 'mysqli_connect("localhost", "root", "", "cv") or die($link);');

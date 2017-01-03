@@ -14,5 +14,15 @@ use generateur_cv\Model\Dao\Generated\KnowledgeBaseDao;
  */
 class KnowledgeDao extends KnowledgeBaseDao
 {
-
+    /**
+     * return knowledge data for last inserted user
+     * @param int $id
+     * @return array
+     */
+    public function getKnowledgeUser($id){
+        $link = mysqli_connect("localhost","root","","cv") or die($link);
+        $sql = mysqli_query($link,'SELECT * FROM knowledge WHERE user = '.$id);
+        $return = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+        return $return;
+    }
 }
